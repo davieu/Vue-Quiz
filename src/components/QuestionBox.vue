@@ -12,6 +12,7 @@
           :key="index"
           @click="selectAnswer(index)" 
           :class="answerClass(index)"
+          :disabled="answered === true"
         >
           {{ answer }}
         </b-list-group-item>
@@ -24,7 +25,13 @@
       >
         Submit
       </b-button>
-      <b-button @click="next" variant="success" href="#">Next</b-button>
+      <b-button 
+        :disabled="!answered"
+        @click="next" 
+        variant="success"
+      >
+        Next
+      </b-button>
     </b-jumbotron>
   </div>
 </template>
@@ -61,6 +68,7 @@
           this.selectedIndex = null
           this.answered = false
           this.shuffleAnswers()
+          this.disableAnswers = false
         }
       }
     },

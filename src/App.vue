@@ -25,6 +25,7 @@
 <script>
 import Header from './components/Header.vue'
 import QuestionBox from './components/QuestionBox.vue'
+import _ from 'lodash'
 
 export default {
   name: 'app',
@@ -43,29 +44,42 @@ export default {
   },
   methods: {
     next() {
-      this.index++
+      if (this.index !== this.questions.length - 1) {
+        this.index++
+
+      } else { 
+        this.index = 0
+        this.numCorrect = 0
+        this.numTotal = 0
+        this.getQuestionsFromAPI()
+      }
+      
     },
     increment(isCorrect) {
       if (isCorrect) {
         this.numCorrect++
-      }
+      } 
       this.numTotal++
+    },
+    getQuestionsFromAPI() {
+        fetch('https://opentdb.com/api.php?amount=10&category=27&type=multiple', {
+          method: 'get'
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((jsonData) => {
+            let questions = [...jsonData.results]
+            console.log(questions)
+            let shuffledQuestions = _.shuffle(questions)
+            console.log(shuffledQuestions)
+            this.questions = shuffledQuestions
+            this.totalQuestions = jsonData.results.length
+          })
     }
   },
   mounted: function() {
-    fetch('https://opentdb.com/api.php?amount=10&category=27&type=multiple', {
-      method: 'get'
-    })
-      .then((response) => {
-        // console.log(response.json())
-        return response.json();
-      })
-      .then((jsonData) => {
-        // console.log(jsonData)
-        // console.log(jsonData.results)
-        this.questions = jsonData.results
-        this.totalQuestions = jsonData.results.length
-      })
+    this.getQuestionsFromAPI()
   }
 }
 </script>
