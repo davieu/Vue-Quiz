@@ -6,6 +6,15 @@
       :totalQuestions="totalQuestions"
     />
     {{totalQuestions[0]}}
+            <b-container class="bv-example-row">
+      <b-row>
+        <b-col xs="10" sm="10" offset-sm="1">
+    <TriviaConfig 
+      :categories="categories"
+      :difficulty="difficulty"/>
+        </b-col>
+      </b-row>
+    </b-container>
 
     <b-container class="bv-example-row" v-if="index < 10">
       <b-row>
@@ -26,6 +35,7 @@
             :next="next"
             :numCorrect="numCorrect"
             :totalQuestions="totalQuestions"
+            :hello="hello"
           />
         </b-col>
       </b-row>
@@ -37,6 +47,7 @@
 import Header from './components/Header.vue'
 import QuestionBox from './components/QuestionBox.vue'
 import GameOver from './components/GameOver.vue'
+import TriviaConfig from './components/TriviaConfig.vue'
 import _ from 'lodash'
 
 export default {
@@ -44,7 +55,8 @@ export default {
   components: {
     Header,
     QuestionBox,
-    GameOver
+    GameOver,
+    TriviaConfig
   },
   data() {
     return {
@@ -53,7 +65,7 @@ export default {
       numCorrect: 0,
       numTotal: 0,
       totalQuestions: 0,
-      category: [
+      categories: [
         'Any Category',
         'General Knowledge',
         'Entertainment: Books',
@@ -78,8 +90,15 @@ export default {
         'Entertainment: Comics',
         'Science: Gadgets',
         'Entertainment: Japanese Anime & Manga',
-        'Entertainment: Cartoon & Animation',
-      ]
+        'Entertainment: Cartoon & Animation'
+      ],
+      difficulty: [
+        'Any',
+        'Easy',
+        'Medium',
+        'Hard'
+      ],
+      amount: 10
     }
   },
   methods: {
@@ -111,9 +130,7 @@ export default {
           })
           .then((jsonData) => {
             let questions = [...jsonData.results]
-            console.log(questions)
             let shuffledQuestions = _.shuffle(questions)
-            console.log(shuffledQuestions)
             this.questions = shuffledQuestions
             this.totalQuestions = jsonData.results.length
           })
@@ -132,6 +149,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 35px;
 }
 </style>

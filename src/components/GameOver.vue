@@ -12,17 +12,19 @@
       >
         Restart
       </b-button>
+      {{hello}}
     </b-jumbotron>
   </div>
 </template>
 
 <script>
 export default {
-      props: {
-      next: Function,
-      totalQuestions: String,
-      numCorrect: String
-    }
+  props: {
+    next: Function,
+    totalQuestions: String,
+    numCorrect: String,
+    hello: String
+  }
 }
 </script>
 

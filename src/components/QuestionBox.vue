@@ -53,6 +53,9 @@
         answered: false
       }
     },
+    mounted() {
+      console.log(this.currentQuestion)
+    },
     computed: {
       answers() {
         //merging the incorrect and correct answer
@@ -114,7 +117,7 @@
 
 <style scoped>
   .questionBox-div {
-    margin-top:100px;
+    margin-top:40px;
   }
 
   .list-group {
