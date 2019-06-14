@@ -7,7 +7,7 @@
     />
     {{totalQuestions[0]}}
 
-    <b-container class="bv-example-row">
+    <b-container class="bv-example-row" v-if="index < 10">
       <b-row>
         <b-col xs="10" sm="10" offset-sm="1">
           <QuestionBox
@@ -19,19 +19,32 @@
         </b-col>
       </b-row>
     </b-container>
+        <b-container class="bv-example-row" v-if="index >= 10">
+      <b-row>
+        <b-col xs="10" sm="10" offset-sm="1">
+          <GameOver 
+            :next="next"
+            :numCorrect="numCorrect"
+            :totalQuestions="totalQuestions"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import QuestionBox from './components/QuestionBox.vue'
+import GameOver from './components/GameOver.vue'
 import _ from 'lodash'
 
 export default {
   name: 'app',
   components: {
     Header,
-    QuestionBox
+    QuestionBox,
+    GameOver
   },
   data() {
     return {
@@ -39,15 +52,43 @@ export default {
       index: 0,
       numCorrect: 0,
       numTotal: 0,
-      totalQuestions: 0
+      totalQuestions: 0,
+      category: [
+        'Any Category',
+        'General Knowledge',
+        'Entertainment: Books',
+        'Entertainment: Film',
+        'Entertainment: Music',
+        'Entertainment: Musicals & Theatres',
+        'Entertainment: Television',
+        'Entertainment: Video Games',
+        'Entertainment: Board Games',
+        'Science & Nature',
+        'Science: Computers',
+        'Science: Mathematics',
+        'Mythology',
+        'Sports',
+        'Geography',
+        'History',
+        'Politics',
+        'Art',
+        'Celebrities',
+        'Animals',
+        'Vehicles',
+        'Entertainment: Comics',
+        'Science: Gadgets',
+        'Entertainment: Japanese Anime & Manga',
+        'Entertainment: Cartoon & Animation',
+      ]
     }
   },
   methods: {
     next() {
-      if (this.index !== this.questions.length - 1) {
+      if (this.index !== this.questions.length) {
         this.index++
 
       } else { 
+        this.index++
         this.index = 0
         this.numCorrect = 0
         this.numTotal = 0

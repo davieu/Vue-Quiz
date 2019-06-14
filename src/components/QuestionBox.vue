@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="questionBox-div">
     <b-jumbotron>
       <template slot="lead">
         {{ currentQuestion.question }}
@@ -113,6 +113,10 @@
 </script>
 
 <style scoped>
+  .questionBox-div {
+    margin-top:100px;
+  }
+
   .list-group {
     margin-bottom: 15px; 
   }
